@@ -373,6 +373,16 @@ class Directory {
 		}
 	}
 
+	
+	/**
+	* Sanitize Inputs | Is vulnerable to LDAP injection
+	**/
+	protected function sanitize($characters){
+		$patterns = "/((?![a-zA-Z0-9\!\$\%\-\_\=\.]).)*/";
+		$characters = preg_replace($patterns, '', preg_quote(trim($characters, "\t\n\r\0\x0B" )));
+		$characters = filter_var($characters , FILTER_SANITIZE_STRING);
+		return $characters;
+	}
 	/**
 	 * Set the entries from Directory
 	 *
